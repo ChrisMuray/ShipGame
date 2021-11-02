@@ -1,11 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
+[ext_resource path="res://Boat/Button.gd" type="Script" id=1]
 [ext_resource path="res://Boat/Boat.gd" type="Script" id=2]
 [ext_resource path="res://Boat/Boat Frames/ship1-export.png" type="Texture" id=3]
 [ext_resource path="res://Boat/Boat Frames/ship1-export2.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 16 )
+extents = Vector2( 8, 15 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -24,9 +25,24 @@ shape = SubResource( 1 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 smoothing_enabled = true
+editor_draw_limits = true
+
+[node name="CloseButton" type="Button" parent="Camera2D"]
+margin_left = -950.0
+margin_top = -530.0
+margin_right = -915.0
+margin_bottom = -505.0
+text = "X"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -0.5, 0 )
 frames = SubResource( 2 )
 frame = 1
 speed_scale = 0.5
 playing = true
+
+[connection signal="pressed" from="Camera2D/CloseButton" to="." method="_on_CloseButton_pressed"]

@@ -2,8 +2,9 @@ extends RigidBody2D
 
 onready var whirlpools = get_parent().get_node("Whirlpools").get_children()
 const FORCE = 500
-const MAX_SPEED = 800
+const MAX_SPEED = 200
 const WHIRL_RADIUS = 100
+const MIN_RADIUS = 10
 const MAX_RADIUS = 400
 onready var respawn_position = position
 var reset_state = false
@@ -22,8 +23,6 @@ func _input(e):
 			w.s.frame = 1 if w.s.frame == 0 else 0
 		if e.scancode == KEY_R:
 			respawn()
-		if e.scancode == KEY_ESCAPE:
-			get_tree().quit()
 
 func _physics_process(delta):
 	w = find_closest_whirlpool()
@@ -45,28 +44,38 @@ func find_closest_whirlpool():
 func apply_whirlpool_forces(w):
 	if not w:
 		return
-	
 	var r = w.position - position
 	var v = linear_velocity
-	var target_velocity = v
-	show_r = r
-	
-	if r.length() > MAX_RADIUS:
+	if r.length() < MIN_RADIUS or r.length() > MAX_RADIUS:
 		linear_velocity = lerp(v.length(),0,0.01)*v.normalized()
 		rotation_degrees = linear_velocity.angle() * 360 / (2*PI) + 90
 		show_r = r
 		return
 	
-	#Movement
+	var acc = Vector2()
+	
+	#Linear force
+	acc += (FORCE / r.length()) * r.normalized()
+	
+	#Whirly force
 	if w.s.frame == 0:
-		var direction = 1 if r.cross(v) >= 0 else -1
-		var dist = r.length()-WHIRL_RADIUS
-		var tangent_direction = r.normalized().rotated(direction*PI/2)
-		target_velocity = 300*tangent_direction + 300*lerp(0,dist,0.01) * r.normalized()
-	else:
-		target_velocity -= 10*FORCE/r.length()*r.normalized()
-	target_velocity = clamp(target_velocity.length(),0,MAX_SPEED)*target_velocity.normalized()
-	linear_velocity = lerp(v, target_velocity, 0.05)
+		var tangent_angle = 0
+		if r.cross(v) > 0:
+			tangent_angle = PI/2
+		elif r.cross(v) < 0:
+			tangent_angle = -PI/2
+		var tangent_direction = r.normalized().rotated(tangent_angle)
+		var tangent_force = (FORCE/5) / r.length() * tangent_direction
+		acc += tangent_force
+	
+	
+	#Vectors that are drawn by Draw.gd
+	#show_acc = acc
+	show_r = r
+	#show_tangent = tangent_direction
+	
+	#Actually add  the acceleration
+	linear_velocity += acc if w.s.frame == 0 else -acc
 	
 	#Point forward
 	rotation_degrees = linear_velocity.angle() * 360 / (2*PI) + 90
@@ -85,6 +94,3 @@ func _integrate_forces(state):
 func all_whirlpool_forces():
 	for w in whirlpools:
 		apply_whirlpool_forces(w)
-
-func _on_CloseButton_pressed():
-	get_tree().quit()
