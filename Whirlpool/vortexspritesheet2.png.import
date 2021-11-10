@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/whirlpool.png-1069eb1e61faa66c511e79c7388a9792.stex"
+path="res://.import/vortexspritesheet2.png-8d6c36b8df6645c9f2f0b5db5f1d528a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Whirlpool/whirlpool.png"
-dest_files=[ "res://.import/whirlpool.png-1069eb1e61faa66c511e79c7388a9792.stex" ]
+source_file="res://Whirlpool/vortexspritesheet2.png"
+dest_files=[ "res://.import/vortexspritesheet2.png-8d6c36b8df6645c9f2f0b5db5f1d528a.stex" ]
 
 [params]
 
@@ -27,7 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
-process/invert_color=false
+process/invert_color=true
 stream=false
 size_limit=0
 detect_3d=true
