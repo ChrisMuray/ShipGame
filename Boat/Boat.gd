@@ -77,5 +77,6 @@ func _on_CloseButton_pressed():
 
 
 func _on_Boat_body_entered(body):
+	print(body)
 	if body.is_in_group("goal"):
-		get_tree().change_scene("res://Game.tscn")
+		Global.next_level()

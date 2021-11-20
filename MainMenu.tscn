@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Boat/Button.gd" type="Script" id=1]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="Button" type="Button" parent="."]
+margin_left = 897.0
+margin_top = 548.0
+margin_right = 942.0
+margin_bottom = 568.0
+text = "Start"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 886.0
+margin_top = 527.0
+margin_right = 959.0
+margin_bottom = 558.0
+text = "Ship Game
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]

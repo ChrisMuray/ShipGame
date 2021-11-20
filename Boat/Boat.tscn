@@ -4,39 +4,41 @@
 [ext_resource path="res://Boat/Boat.gd" type="Script" id=2]
 [ext_resource path="res://Boat/Boat.png" type="Texture" id=3]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=78]
 extents = Vector2( 15.5, 32 )
 
-[sub_resource type="AtlasTexture" id=81]
+[sub_resource type="AtlasTexture" id=79]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 32, 64 )
 
-[sub_resource type="AtlasTexture" id=82]
+[sub_resource type="AtlasTexture" id=80]
 atlas = ExtResource( 3 )
 region = Rect2( 32, 0, 32, 64 )
 
-[sub_resource type="AtlasTexture" id=83]
+[sub_resource type="AtlasTexture" id=81]
 atlas = ExtResource( 3 )
 region = Rect2( 64, 0, 32, 64 )
 
-[sub_resource type="SpriteFrames" id=84]
+[sub_resource type="SpriteFrames" id=82]
 animations = [ {
-"frames": [ SubResource( 81 ), SubResource( 82 ), SubResource( 83 ), SubResource( 82 ) ],
+"frames": [ SubResource( 79 ), SubResource( 80 ), SubResource( 81 ), SubResource( 80 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
 [node name="Boat" type="RigidBody2D"]
+position = Vector2( 189, 906 )
 gravity_scale = 0.0
+contacts_reported = 1
+contact_monitor = true
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 1 )
+shape = SubResource( 78 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-current = true
 smoothing_enabled = true
 editor_draw_limits = true
 
@@ -44,6 +46,7 @@ editor_draw_limits = true
 script = ExtResource( 1 )
 
 [node name="CloseButton" type="Button" parent="Camera2D/GUI"]
+visible = false
 margin_left = -950.0
 margin_top = -530.0
 margin_right = -915.0
@@ -54,14 +57,16 @@ __meta__ = {
 }
 
 [node name="MiniMap" type="Sprite" parent="Camera2D/GUI"]
+visible = false
 position = Vector2( 808, -388 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -0.5 )
 rotation = 1.5708
-frames = SubResource( 84 )
+frames = SubResource( 82 )
 frame = 3
 speed_scale = 0.5
 playing = true
 
+[connection signal="body_entered" from="." to="." method="_on_Boat_body_entered"]
 [connection signal="pressed" from="Camera2D/GUI/CloseButton" to="." method="_on_CloseButton_pressed"]
