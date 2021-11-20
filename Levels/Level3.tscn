@@ -579,15 +579,6 @@ format = 1
 
 [node name="Whirlpools" type="Node2D" parent="."]
 
-[node name="Boat" parent="." instance=ExtResource( 6 )]
-position = Vector2( 1128, 594 )
-
-[node name="Camera2D" parent="Boat" index="1"]
-current = false
-
-[node name="AnimatedSprite" parent="Boat" index="2"]
-frame = 1
-
 [node name="Draw" type="Node2D" parent="."]
 script = ExtResource( 7 )
 
@@ -611,4 +602,5 @@ position = Vector2( 850, 349 )
 [node name="Police6" parent="Polices" instance=ExtResource( 5 )]
 position = Vector2( 902, 568 )
 
-[editable path="Boat"]
+[node name="Boat" parent="." instance=ExtResource( 6 )]
+enable_minimap = true

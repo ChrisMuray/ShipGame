@@ -6,11 +6,16 @@ onready var environment = get_parent().get_node("Environment")
 onready var cam = get_node("Camera2D")
 onready var respawn_position = position
 
+export var enable_minimap: bool = false
+export var enable_camera_follow: bool = true
+
 var reset_state = false
 var w
 var dist
 
 func _ready():
+	cam.current = enable_camera_follow
+	$Camera2D/GUI/MiniMap.visible = enable_minimap
 	connect("body_entered", self, "_on_Boat_body_entered")
 	set_camera_limits()
 

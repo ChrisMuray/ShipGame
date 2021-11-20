@@ -805,6 +805,7 @@ __meta__ = {
 }
 
 [node name="Boat" parent="." instance=ExtResource( 5 )]
+enable_camera_follow = false
 
 [node name="Whirlpools" type="Node2D" parent="."]
 
